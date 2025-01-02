@@ -92,9 +92,16 @@
   {{- $bibliographyPath = $constructedBibResource }}
   {{- end }}
 
-  {{- $references = getJSON $bibliographyPath }}
+  {{ with resources.Get $bibliographyPath }}
+    {{ with .Err }}
+      {{- errorf "%s" . -}}
+    {{ else }}
+      {{ $references = . | transform.Unmarshal }}
+    {{ end }}
+  {{ end }}
 
 {{- end }}
+
 
 {{- $bibParams := dict "references" $references }}
 {{- partial "bibliography/bibliography-list.html" $bibParams }}
