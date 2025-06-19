@@ -55,9 +55,16 @@
 {{- $citedOnly := false }}
 {{- $references := false }}
 
+{{/* do not highlight names by default */}}
+{{- $highlightLastname := ""}}
+{{- $highlightFirstname := "" }}
+
+
 {{- if .IsNamedParams }}
   {{- with .Get "src" }}{{ $src = . }}{{ end }}
   {{- if .Get "cited" }}{{ $citedOnly = true }}{{ end }}
+  {{- if .Get "highlightFirstname"}}{{ $highlightFirstname = .Get "highlightFirstname"}}{{end}}
+  {{- if .Get "highlightFirstname"}}{{ $highlightLastname = .Get "highlightLastname"}}{{end}}
 {{- else }}
   {{- with .Get 0 }}
     {{- if eq . "cited" }}
@@ -102,6 +109,13 @@
 
 {{- end }}
 
+{{- if $.Site.Params.highlightLastname }}
+{{- $highlightLastname = $.Site.Params.highlightLastname}}
+{{- end }}
 
-{{- $bibParams := dict "references" $references }}
+{{- if $.Site.Params.highlightFirstname }}
+{{- $highlightFirstname = $.Site.Params.highlightFirstname}}
+{{- end }}
+
+{{- $bibParams := dict "references" $references "highlightLastname" $highlightLastname "highlightFirstname" $highlightFirstname}}
 {{- partial "bibliography/bibliography-list.html" $bibParams }}

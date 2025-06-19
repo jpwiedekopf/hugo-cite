@@ -50,12 +50,17 @@
 {{/* -------------------- 2. BEGIN REFERENCES BLOCK -------------------- */}}
 {{- $references := .references }}
 
+{{- $highlightFirstname := .highlightFirstname }}
+{{- $highlightLastname := .highlightLastname }}
+
 {{ if $references }}
 <section class="hugo-cite-bibliography">
   <dl>
     {{/* -------------------- BEGIN RANGE BIBLIOGRAPHY -------------------- */}}
     {{- range $refIndex, $refObject := $references -}}
       {{- $currentRef := index $references $refIndex }}
+
+      {{- $refWrapper := dict "ref" $currentRef "highlightFirstname" $highlightFirstname "highlightLastname" $highlightLastname}}
 
       {{- $partialPath := string (printf "bibliography/%s-style.html" $citationStyle) }}
 
@@ -67,7 +72,7 @@
             Full bibliographic notice
           */}}
 
-          {{- partial $partialPath $currentRef -}}</dd>
+          {{- partial $partialPath $refWrapper -}}</dd>
 
       </div>
     {{- end -}}
