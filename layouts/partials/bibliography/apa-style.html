@@ -118,9 +118,9 @@
 {{/* BEGIN DOI */}}
 {{- define "DOIPart" }}
   {{- if .DOI }}
-  <a href="https://doi.org/{{ .DOI }}"
+  DOI: <a href="https://doi.org/{{ .DOI }}"
      itemprop="identifier"
-     itemtype="https://schema.org/URL">https://doi.org/{{- .DOI -}}</a>
+     itemtype="https://schema.org/URL">{{- .DOI -}}</a>
   {{- else if .URL }}&#32;
   {{- i18n "apa_retrieved_from" | default "Retrieved from" -}}&#32;
   <a href="{{ .URL }}"
