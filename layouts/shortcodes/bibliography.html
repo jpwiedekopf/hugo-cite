@@ -117,5 +117,7 @@
 {{- $highlightFirstname = $.Site.Params.highlightFirstname}}
 {{- end }}
 
-{{- $bibParams := dict "references" $references "highlightLastname" $highlightLastname "highlightFirstname" $highlightFirstname}}
+{{- $sortedReferences := sort $references "title" -}}
+
+{{- $bibParams := dict "references" $sortedReferences "highlightLastname" $highlightLastname "highlightFirstname" $highlightFirstname}}
 {{- partial "bibliography/bibliography-list.html" $bibParams }}
